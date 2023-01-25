@@ -1,0 +1,30 @@
+.footer-wrapper{
+    width: 100%;
+    padding: 50px 0;
+    background-color:#E0ECDC;
+}
+
+
+.footer-ul{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+}
+.footer-li{
+    font-size: 22px;
+
+}
+.div{
+    border: 1px solid black;
+}
+.footer-input{
+    border: none;
+    background: transparent;
+    border-bottom: 1px solid black;
+    padding: 2px 5px;
+}
+.footer-send{
+    background: none;
+    padding: 2px solid green;
+}

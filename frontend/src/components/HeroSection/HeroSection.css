@@ -1,0 +1,11 @@
+.nav-photo {
+    width: 100%;
+    height: 70vh;
+    object-fit: cover;
+}
+.hero-content{
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 40%;
+}

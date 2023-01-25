@@ -1,0 +1,25 @@
+.our-miss__wrapper {
+    width: 100%;
+    background: url("https://mobirise.com/extensions/floram4/floral-studio/assets/images/background2.jpg");
+    padding: 100px 0;
+    
+}
+.our-miss__card{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    padding: 0;
+}
+.our-miss__left{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #25705D;
+}
+.our-miss__right{
+    width: 50%;
+}
+.our-miss__content{
+    width: 70%;
+}
