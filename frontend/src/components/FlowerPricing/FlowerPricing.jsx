@@ -2,11 +2,31 @@ import React, { useEffect, useState } from 'react'
 import './FlowerPricing.css'
 const FlowerPricing = () => {
     const [flowers, setFlowers] = useState(null)
+    const [sorted, setSorted] = useState({
+        sorted: "value", reversed: false
+    })
+    const sortData = () => {
+        setSorted({ sorted: "value", reversed: !sorted.reversed })
+        const dataCopy = [...flowers]
+        dataCopy.sort((a, b) => {
+            if (sorted.reversed) {
+                return a.value - b.value
+            }
+            return b.value - a.value
+        })
+        setFlowers(dataCopy)
+    }
+
+
+
+
     const addData = () => {
         fetch('http://localhost:3040/flowers')
             .then((response) => response.json())
             .then((data) => setFlowers(data));
     }
+
+
     useEffect(() => {
         addData()
     }, [])
@@ -18,6 +38,9 @@ const FlowerPricing = () => {
                     <div className="row ">
                         <h3 style={{ color: "RGB(27, 116, 94)", textAlign: "center" }}>Devoted to wonderful beauty</h3>
                         <h3 style={{ fontSize: "46px", color: "RGB(27, 116, 94),", textAlign: "center", margin: "0 auto" }}>Flowers Pricing</h3>
+                        <div style={{ display: "flex", justifyContent: "center", margin: "20px 0" }}>
+                            <button onClick={sortData} style={{ padding: "5px 10px", border: "none", backgroundColor: "orange" }}>Sort by Price</button>
+                        </div>
                         {
                             flowers?.map((flower) => (
                                 <div className="col-4" style={{ margin: "50px 0" }}>
