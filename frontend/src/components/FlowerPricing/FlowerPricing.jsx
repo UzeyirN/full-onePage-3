@@ -5,6 +5,18 @@ const FlowerPricing = () => {
     const [sorted, setSorted] = useState({
         sorted: "value", reversed: false
     })
+    const [value, setValue] = useState("")
+
+
+    //! get
+    const addData = () => {
+        fetch('http://localhost:3040/flowers')
+            .then((response) => response.json())
+            .then((data) => setFlowers(data));
+    }
+
+
+    //!sorting
     const sortData = () => {
         setSorted({ sorted: "value", reversed: !sorted.reversed })
         const dataCopy = [...flowers]
@@ -17,13 +29,9 @@ const FlowerPricing = () => {
         setFlowers(dataCopy)
     }
 
-
-
-
-    const addData = () => {
-        fetch('http://localhost:3040/flowers')
-            .then((response) => response.json())
-            .then((data) => setFlowers(data));
+    //!filtering
+    const handleChange = (e) => {
+        setValue(e.target.value)
     }
 
 
@@ -38,17 +46,23 @@ const FlowerPricing = () => {
                     <div className="row ">
                         <h3 style={{ color: "RGB(27, 116, 94)", textAlign: "center" }}>Devoted to wonderful beauty</h3>
                         <h3 style={{ fontSize: "46px", color: "RGB(27, 116, 94),", textAlign: "center", margin: "0 auto" }}>Flowers Pricing</h3>
-                        <div style={{ display: "flex", justifyContent: "center", margin: "20px 0" }}>
-                            <button onClick={sortData} style={{ padding: "5px 10px", border: "none", backgroundColor: "orange" }}>Sort by Price</button>
+                        <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", margin: "20px 0", alignItems: "center" }}>
+                            <h5>Sort..</h5>
+                            <button onClick={sortData} style={{ padding: "5px 10px", border: "none", backgroundColor: "orange", margin: "0 0 20px 0" }}>Sort by Price</button>
+                            <h5>Filter...</h5>
+                            <input onChange={handleChange} type="text" />
                         </div>
                         {
-                            flowers?.map((flower) => (
-                                <div className="col-4" style={{ margin: "50px 0" }}>
-                                    <img style={{ width: "100%", height: "400px" }} src={flower.image} alt="" />
-                                    <p style={{ fontSize: "22px", textAlign: "center", color: "RGB(27, 116, 94)" }}>{flower.name}</p>
-                                    <p style={{ textAlign: "center", color: "RGB(27, 116, 94)" }}>$ {flower.value}</p>
-                                </div>
-                            ))
+                            flowers?.filter(product => {
+                                return value.trim().toLowerCase() === "" ? product : product.name.toLowerCase().includes(value.toLowerCase())
+                            })
+                                .map((flower) => (
+                                    <div className="col-4" style={{ margin: "50px 0" }}>
+                                        <img style={{ width: "100%", height: "400px" }} src={flower.image} alt="" />
+                                        <p style={{ fontSize: "22px", textAlign: "center", color: "RGB(27, 116, 94)" }}>{flower.name}</p>
+                                        <p style={{ textAlign: "center", color: "RGB(27, 116, 94)" }}>$ {flower.value}</p>
+                                    </div>
+                                ))
                         }
                     </div>
                 </div>
