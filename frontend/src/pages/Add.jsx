@@ -4,9 +4,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import './Add.css'
 import { inputSchema } from '../Schema/FormValidation';
 import axios from 'axios'
+import { Helmet } from 'react-helmet';
 
 
 const Add = () => {
+
+
 
   const [state, setState] = useState({
     image: "",
@@ -40,6 +43,9 @@ const Add = () => {
   };
   return (
     <>
+      <Helmet >
+        <title>Add</title>
+      </Helmet>
       <div className='add-input__wrapper'>
         <form onSubmit={handleSubmit(onSubmit)} className='add-form' action="">
           <input name='image' value={state.image} placeholder="image " {...register("image")} className='add-input' type="text" onChange={handleChange} />

@@ -1,8 +1,13 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 
 const Pricing = () => {
   return (
-    <div>Pricing</div>
+    <>
+      <Helmet >
+        <title>Pricing</title>
+      </Helmet>
+    </>
   )
 }
 

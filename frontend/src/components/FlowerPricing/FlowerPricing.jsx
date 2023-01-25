@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import './FlowerPricing.css'
 const FlowerPricing = () => {
@@ -9,7 +10,7 @@ const FlowerPricing = () => {
 
 
     //! get
-    const addData = () => {
+    const getData = () => {
         fetch('http://localhost:3040/flowers')
             .then((response) => response.json())
             .then((data) => setFlowers(data));
@@ -34,9 +35,15 @@ const FlowerPricing = () => {
         setValue(e.target.value)
     }
 
+    //!deleting
+    const handleDelete = async (id) => {
+        await axios.delete(`http://www.localhost:3040/flowers/${id}`);
+        getData()
+    }
+
 
     useEffect(() => {
-        addData()
+        getData()
     }, [])
 
     return (
@@ -50,17 +57,18 @@ const FlowerPricing = () => {
                             <h5>Sort..</h5>
                             <button onClick={sortData} style={{ padding: "5px 10px", border: "none", backgroundColor: "orange", margin: "0 0 20px 0" }}>Sort by Price</button>
                             <h5>Filter...</h5>
-                            <input onChange={handleChange} type="text" />
+                            <input onChange={handleChange} type="text" placeholder='filter by name' style={{ padding: "2px 5px" }} />
                         </div>
                         {
                             flowers?.filter(product => {
                                 return value.trim().toLowerCase() === "" ? product : product.name.toLowerCase().includes(value.toLowerCase())
                             })
-                                .map((flower) => (
-                                    <div className="col-4" style={{ margin: "50px 0" }}>
-                                        <img style={{ width: "100%", height: "400px" }} src={flower.image} alt="" />
-                                        <p style={{ fontSize: "22px", textAlign: "center", color: "RGB(27, 116, 94)" }}>{flower.name}</p>
-                                        <p style={{ textAlign: "center", color: "RGB(27, 116, 94)" }}>$ {flower.value}</p>
+                                .map(({ _id, image, name, value }) => (
+                                    <div className="col-4" style={{ margin: "50px 0", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                        <img style={{ width: "100%", height: "400px" }} src={image} alt="" />
+                                        <p style={{ fontSize: "22px", color: "RGB(27, 116, 94)" }}>{name}</p>
+                                        <p style={{ color: "RGB(27, 116, 94)" }}>$ {value}</p>
+                                        <button onClick={() => handleDelete(_id)} style={{ padding: "5px 10px", border: "none",color:"white", backgroundColor: "red", margin: "0 0 20px 0" }}>Delete</button>
                                     </div>
                                 ))
                         }
